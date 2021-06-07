@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram</title>
+</head>
+<body>
+    <h3>Instagram</h3>
+    <a href="{% url 'member:profile' %}">프로필</a>
+    <a href="{% url 'member:logout' %}">로그아웃</a>
+
+
+    {% for article_obj in article %}
+        <p>{{article_obj.id}}</p>
+        {% for photo in article_obj.photo.all %}
+            <img src="{{photo.image.url}}"><br>    
+        {% endfor %}
+    {% endfor %}
+</body>
+</html>

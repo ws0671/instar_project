@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{member.name}}(@{{member.username}})</title>
+</head>
+<body>
+    <h3>Instagram</h3>
+    <span>{{member.username}}</span>
+    <button><a href="{% url 'member:edit' %}">프로필 편집</a></button>
+    <br>
+    <br>
+    <span>게시물</span>
+    <span>팔로워</span>
+    <span>팔로우</span>
+    <p>{{member.name}}</p>
+    <p><a href="{% url 'social:upload' %}">사진 및 동영상 공유</a></p>
+
+</body>
+</html>

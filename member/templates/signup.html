@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+</head>
+<body>
+    <form action="{% url 'member:signup' %}" method='POST'>
+        {% csrf_token %}
+        <input type="text" placeholder="이메일 주소" name='useremail'>
+        <input type="text" placeholder="성명" name='name'>
+        <input type="text" placeholder="사용자 이름" name='username'>
+        <input type="text" placeholder="비밀번호" name='password'>
+        <button type='submit'>가입</button>
+    </form>
+
+    <p>계정이 있으신가요? <a href="{% url 'index' %}">로그인</a></p>
+    
+</body>
+</html>

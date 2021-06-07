@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram</title>
+</head>
+<body>
+    <h1>Instagram</h1>
+    <form action="{% url 'index' %}" method='POST'>
+        {% csrf_token %}
+        <input type="text" placeholder='이메일' name='useremail'>
+        <input type="text" placeholder="비밀번호" name='password'>
+        <button type='submit'>로그인</button>
+    </form>
+    <p>
+    {% if error.state %} 
+    {{error.msg}} 
+    {% endif %}
+    </p>  
+    <p>계정이 없으신가요? <a href="{% url 'member:signup' %}">가입하기</a></p>
+</body>
+</html>
