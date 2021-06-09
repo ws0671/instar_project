@@ -5,18 +5,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram</title>
+    <script src="https://kit.fontawesome.com/3a22cbe536.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 </head>
 <body>
     <h3>Instagram</h3>
     <a href="{% url 'member:profile' %}">프로필</a>
     <a href="{% url 'member:logout' %}">로그아웃</a>
-
-
+    <br>
     {% for article_obj in article %}
-        <p>{{article_obj.id}}</p>
         {% for photo in article_obj.photo.all %}
-            <img src="{{photo.image.url}}"><br>    
+            <img src="{{photo.image.url}}" width='500'><br>
+            <p>{{photo.article.content}}</p>
+                <i class ="{% if request.user in photo.article.like_users.all %}
+                fas
+                {% else %}
+                far
+                {% endif %} fa-heart
+                like-button" data-id="{{photo.id}}">
+            </i>
+                    <i class="far fa-comment"></i>
         {% endfor %}
     {% endfor %}
+
+    <script>
+        const likebuttons = document.querySelectorAll('.like-button')
+        likebuttons.forEach(function(button){
+            button.addEventListener('click', function(event){
+                console.log(event)
+                const postId = event.target.dataset.id
+                axios.get(`/social/like/${postId}`)
+                        .then(function(response){
+                            // response.data => {'liked':True} 혹은 {'liked':False}
+                            if (response.data.liked) {
+                                event.target.classList.remove('far')
+                                event.target.classList.add('fas')
+                            } else {
+                                event.target.classList.remove('fas')
+                                event.target.classList.add('far')
+                            }
+                        })
+            })
+        })
+    </script>
 </body>
+
 </html>

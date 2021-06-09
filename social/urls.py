@@ -5,5 +5,6 @@ app_name = 'social'
 
 urlpatterns = [
     path('upload/', views.upload, name='upload'),
+    path('like/<int:article_pk>', views.like, name='like'),
 
 ]
