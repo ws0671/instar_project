@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 
 from .models import Member
-
+from social.models import Comment
 # Create your views here.
 ERROR_MSG = {
     'MISSING_INPUT': '필수항목을 작성해주세요.',
@@ -69,7 +69,7 @@ def logout(request) :
 def main(request) :
     article = Article.objects.all()
     context = {
-        'article': article
+        'article': article,
     }
     return render(request, 'main.html', context)
 

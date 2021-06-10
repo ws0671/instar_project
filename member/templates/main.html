@@ -18,14 +18,27 @@
         {% for photo in article_obj.photo.all %}
             <img src="{{photo.image.url}}" width='500'><br>
             <p>{{photo.article.content}}</p>
-                <i class ="{% if request.user in photo.article.like_users.all %}
-                fas
-                {% else %}
-                far
-                {% endif %} fa-heart
-                like-button" data-id="{{photo.id}}">
+            <i class ="{% if request.user in photo.article.like_users.all %}
+            fas
+            {% else %}
+            far
+            {% endif %} fa-heart
+            like-button" data-id="{{article_obj.id}}" style="cursor: pointer;" >
             </i>
-                    <i class="far fa-comment"></i>
+            <i class="far fa-comment" style="cursor: pointer;"></i>
+            <br>
+                좋아요
+            <span id="like-count-{{article_obj.id}}">{{count}}</span>개
+            <br>
+            {% for comment in article_obj.comment.all %}
+            {{comment.content}}
+            <br>
+            {% endfor %}
+            <br>
+            <form action="{% url 'social:comment' article_obj.pk %}" method="POST">
+                {% csrf_token %}
+                <input type="text" placeholder="댓글 달기..." name="comment" />
+            </form>
         {% endfor %}
     {% endfor %}
 
@@ -33,10 +46,13 @@
         const likebuttons = document.querySelectorAll('.like-button')
         likebuttons.forEach(function(button){
             button.addEventListener('click', function(event){
-                console.log(event)
+                console.log(event.target.classList)
                 const postId = event.target.dataset.id
                 axios.get(`/social/like/${postId}`)
                         .then(function(response){
+                            document.querySelector(
+                                `#like-count-${postId}`).innerText= response.data.count
+                            
                             // response.data => {'liked':True} 혹은 {'liked':False}
                             if (response.data.liked) {
                                 event.target.classList.remove('far')
@@ -46,6 +62,7 @@
                                 event.target.classList.add('far')
                             }
                         })
+                // window.location.reload();
             })
         })
     </script>

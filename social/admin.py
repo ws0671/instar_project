@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, Photo
+from .models import Article, Photo,Comment
 # Register your models here.
 
 class PhotoInline(admin.TabularInline):
@@ -11,3 +11,5 @@ class ArticleAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(Article, ArticleAdmin)
+
+admin.site.register(Comment)
