@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 
 from .models import Member
-from social.models import Comment
+from social.models import Comment,Tag
 # Create your views here.
 ERROR_MSG = {
     'MISSING_INPUT': '필수항목을 작성해주세요.',
@@ -68,8 +68,10 @@ def logout(request) :
 
 def main(request) :
     article = Article.objects.all()
+    tag = Tag.objects.all().first()
     context = {
         'article': article,
+        'tag': tag,
     }
     return render(request, 'main.html', context)
 
@@ -77,7 +79,7 @@ def profile(request) :
     user = request.user
     member = Member.objects.filter(user=user).first()
     context = {
-        'member' : member
+        'member' : member,
     }
     return render(request, 'profile.html', context)
 
@@ -99,3 +101,11 @@ def edit(request) :
         return redirect('member:edit')       
         
     return render(request, 'edit.html', context)
+
+def search(request) :
+    member_list = Member.objects.all()
+    search = request.GET.get('search')
+    if search:
+        member_list = member_list.filter(title__icontains=search)
+    
+    return redirect('member:main')

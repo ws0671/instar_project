@@ -10,14 +10,24 @@
 
 </head>
 <body>
-    <h3>Instagram</h3>
+    <a href="{% url 'member:main' %}"><h3>Instagram</h3></a>
+    <form action="" method="get">
+        {% csrf_token %}
+        <input type="text" placeholder="검색" name='search'>
+    </form>
+    
     <a href="{% url 'member:profile' %}">프로필</a>
     <a href="{% url 'member:logout' %}">로그아웃</a>
+    <hr>    
     <br>
     {% for article_obj in article %}
         {% for photo in article_obj.photo.all %}
             <img src="{{photo.image.url}}" width='500'><br>
             <p>{{photo.article.content}}</p>
+            {%for tag in photo.article.tags.all%}
+            <a href="{% url 'social:tag-detail' tag.pk %}"><p>#{{tag.name}}</p></a>
+            {% endfor %}
+            {% endfor %}
             <i class ="{% if request.user in photo.article.like_users.all %}
             fas
             {% else %}
@@ -27,8 +37,10 @@
             </i>
             <i class="far fa-comment" style="cursor: pointer;"></i>
             <br>
-                좋아요
-            <span id="like-count-{{article_obj.id}}">{{count}}</span>개
+            좋아요
+            <span id="like-count-{{article_obj.id}}">
+                 {{count}}
+            </span>개
             <br>
             {% for comment in article_obj.comment.all %}
             {{comment.content}}
@@ -37,10 +49,10 @@
             <br>
             <form action="{% url 'social:comment' article_obj.pk %}" method="POST">
                 {% csrf_token %}
+                <!-- <input type="hidden" value="{{article_obj.pk}}" name="article_id"> -->
                 <input type="text" placeholder="댓글 달기..." name="comment" />
             </form>
         {% endfor %}
-    {% endfor %}
 
     <script>
         const likebuttons = document.querySelectorAll('.like-button')

@@ -7,12 +7,17 @@
     <title>업로드</title>
 </head>
 <body>
+    <a href="{% url 'member:main' %}"><h3>Instagram</h3></a>
+    <a href="{% url 'member:profile' %}">프로필</a>
+    <a href="{% url 'member:logout' %}">로그아웃</a>
+    <hr>    
     <form action="{% url 'social:upload' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="file" name="image" multiple>
-        <textarea name="content"></textarea>
+        <input type='text' name='tag_name' placeholder="tag name" />
+        <textarea name="content" placeholder="문구 입력..."></textarea>
         <input type="submit" value="작성하기">
     </form>
     
 </body>
-</html>
+</html> 

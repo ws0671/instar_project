@@ -7,7 +7,10 @@
     <title>프로필 편집</title>
 </head>
 <body>
-    <h3>Instagram</h3>
+    <a href="{% url 'member:main' %}"><h3>Instagram</h3></a>
+    <a href="{% url 'member:profile' %}">프로필</a>
+    <a href="{% url 'member:logout' %}">로그아웃</a>
+    <hr>    
     {{member.username}}
     <form action="{% url 'member:edit' %}" method="POST">
     {% csrf_token %}

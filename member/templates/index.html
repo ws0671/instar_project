@@ -10,8 +10,8 @@
     <h1>Instagram</h1>
     <form action="{% url 'index' %}" method='POST'>
         {% csrf_token %}
-        <input type="text" placeholder='이메일' name='useremail'>
-        <input type="text" placeholder="비밀번호" name='password'>
+        <input type="email" placeholder='이메일' name='useremail'>
+        <input type="password" placeholder="비밀번호" name='password'>
         <button type='submit'>로그인</button>
     </form>
     <p>
